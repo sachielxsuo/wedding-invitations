@@ -10,6 +10,10 @@ import {browserHistory} from 'react-router';
 import Back from '../../components/Back/Back';
 import BgImg from '../../components/BgImg/BgImg';
 
+import { boy, girl } from '../config';
+
+const owner = userType == 'boy' ? boy : girl
+
 const bgImg = require('./images/bg.jpg');
 const itemImg = require('./images/phone-item.jpg');
 const returnImg = require('../../asset/images/return.png');
@@ -42,11 +46,11 @@ export default class Dialing extends Component {
         return (
             <div className="full-page dialing-page">
                 <BgImg src={bgImg} animate={false}/>
-                <a className="dialing-item dialing-item-1" href="tel:18868875314">
+                <a className="dialing-item dialing-item-1" href={`tel:${ boy.phoneNum }`}>
                     <img src={itemImg}/>
                     <p>新郎</p>
                 </a>
-                <a className="dialing-item dialing-item-2" href="tel:18768137605">
+                <a className="dialing-item dialing-item-2" href={`tel:${ girl.phoneNum }`}>
                     <img src={itemImg}/>
                     <p>新娘</p>
                 </a>

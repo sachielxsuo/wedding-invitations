@@ -4,6 +4,24 @@
   .bg {
     background-color: rgba(0, 0, 0, 0.31);
   }
+  .phone-callin {
+    position: absolute;
+    top: 100px;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 100;
+    width: 100%;
+    text-align: center;
+
+    p {
+      margin-top: 5px;
+    }
+
+    .phone-callin-name {
+      font-size: 48px;
+      font-weight: bolder;
+    }
+  }
   .img-line-1 {
     position: absolute;
     width: 172px;

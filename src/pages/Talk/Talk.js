@@ -6,7 +6,10 @@ import React, {Component} from 'react';
 import {browserHistory} from 'react-router';
 import BgImg from '../../components/BgImg/BgImg';
 import './Talk.scss';
-import {autoPlay} from 'util/audioAutoPlay'
+import {autoPlay} from 'util/audioAutoPlay';
+import { boy, girl } from '../config';
+
+const owner = userType == 'boy' ? boy : girl
 
 const bgImg = require('../../asset/images/photos/talk-bg.jpg');
 const functionImg = require('./images/function.png');
@@ -40,7 +43,7 @@ export default class Talk extends Component {
     }
 
     _countDown(timestamp) {
-        var endTimestamp = 1577808000;
+        var endTimestamp = Math.floor(owner.wedding.time.getTime() / 1000);
         if (timestamp == 0 || timestamp >= endTimestamp) {
             return '';
         }

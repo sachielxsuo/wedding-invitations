@@ -5,7 +5,10 @@
 import React, {Component} from 'react';
 import './Desktop.scss';
 import {browserHistory} from 'react-router';
-import {autoPlay} from 'util/audioAutoPlay'
+import {autoPlay} from 'util/audioAutoPlay';
+import { boy, girl } from '../config';
+
+const owner = userType == 'boy' ? boy : girl
 
 import Bless from '../../components/Bless/Bless';
 import BgImg from '../../components/BgImg/BgImg';
@@ -19,6 +22,17 @@ const closeImg = require('./images/close.png');
 
 const audioMp3 = require('./audio/duang.mp3');
 const audioOgg = require('./audio/duang.ogg');
+
+const weddingTime = (function(time){
+    const MONTH_CHINESE = ['一','二','三','四','五','六','七','八','九','十', '十一', '十二'];
+    let month = MONTH_CHINESE[time.getMonth()];
+    let date = time.getDate()
+    date = date < 10 ? `0${ date }` : date;
+    return {
+        month, date
+    }
+})(owner.wedding.time)
+
 
 /*底部热点区组件*/
 class BottomHotSpot extends Component {
@@ -139,8 +153,8 @@ export default class Desktop extends Component {
                     <div className="white-bottom"></div>
                     <img src={iconImg} className="icon"/>
                     {/*上部热定区*/}
-                    <TopHotSpot left="27px" topText={userType == 'boy' ? '一月' : '2月'}
-                                middleText={userType == 'boy' ? '31' : '04'} bottomText={'日期'}
+                    <TopHotSpot left="27px" topText={weddingTime.month + '月'}
+                                middleText={weddingTime.date} bottomText={'日期'}
                                 click={()=>this._redirectToUrl('/integrated')}/>
                     <TopHotSpot left="180px" bottomText={'视频'} click={()=>this._openVideo()}/>
                     <TopHotSpot left="332px" bottomText={'相册'} click={()=>this._redirectToUrl('/photos')}/>

@@ -8,6 +8,30 @@ import  Back from 'components/Back/Back';
 import BgImg from '../../components/BgImg/BgImg';
 const bgImg = require('../../asset/images/photos/invite-bg.jpg');
 
+import { boy, girl } from '../config';
+
+const owner = userType == 'boy' ? boy : girl
+
+const weddingTime = (function(time) {
+    const WEEK_CHINESE = ['日','一','二','三','四','五','六'];
+    const year = time.getFullYear();
+    const month = time.getMonth() + 1;
+    const date = time.getDate();
+    const day = WEEK_CHINESE[time.getDay()];
+    const hour = time.getHours();
+    const minutes = time.getMinutes();
+
+    function fill(num) {
+        return (num < 10 ? '0' : '') + num;
+    }
+
+    return {
+        dateStr: `${ year }年${ month }月${ date }日`,
+        timeStr: `${ fill(hour) }:${ fill(minutes) }`,
+        weekStr: `星期${ day }`
+    }
+})(owner.wedding.time)
+
 export default class Call extends Component {
     constructor(props) {
         super(props);
@@ -22,19 +46,12 @@ export default class Call extends Component {
                 <div className="text-box">
                     <div className="text-title">
                         <p className="english">Our invitation</p>
-                        <p>金龙 & 蛋蛋的邀约</p>
+                        <p>{boy.name} & {girl.name}的邀约</p>
                     </div>
                     <div className="text-content">
                         <p>各位亲朋好友：</p>
-                        {userType == 'boy' ?
-                            <p>诚挚邀请您于2017年1月31日，星期二，08:00参加金龙和蛋蛋的结婚典礼。</p>
-                            :
-                            <p>诚挚邀请您于2017年2月4日，星期六，11:00参加金龙和蛋蛋的结婚典礼。</p>
-
-                        }
-
+                        <p>诚挚邀请您于{weddingTime.dateStr}，{weddingTime.weekStr}，{weddingTime.timeStr}参加{boy.name}和{girl.name}的结婚典礼。</p>
                         <p>您的到来是对我们最好的祝福，敬备喜宴，恭请光临。</p>
-                        <p>杭州的小伙伴，年后回杭另设宴席。</p>
                     </div>
                 </div>
                 <Back position={"back-left-top"}/>
