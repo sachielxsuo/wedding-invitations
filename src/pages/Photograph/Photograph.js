@@ -5,7 +5,7 @@ import './Photograph.scss';
 import {browserHistory} from 'react-router';
 import {autoPlay} from 'util/audioAutoPlay'
 
-const bgImg = require('../../asset/images/photos/photograph-bg.jpg');
+const bgImg = require('../../asset/images/photos/photograph-bg.png');
 const borderImg = require('./images/photo-border.png');
 const blackWhiteImg = require('./images/black-white.png');
 const blackImg = require('./images/black.jpg');

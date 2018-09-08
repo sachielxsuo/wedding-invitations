@@ -7,8 +7,8 @@ import './Snapshot.scss';
 import  Back from 'components/Back/Back';
 import BgImg from '../../components/BgImg/BgImg';
 
-const firstImg = require('asset/images/photos/snapshot-1.jpg');
-const secondImg = require('asset/images/photos/snapshot-2.jpg');
+const firstImg = require('asset/images/photos/snapshot/01.jpg');
+const secondImg = require('asset/images/photos/snapshot/02.jpg');
 const bgImg = require('./images/camera.png');
 export default class Snapshot extends Component {
     constructor(props) {

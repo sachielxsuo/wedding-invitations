@@ -13,12 +13,13 @@ const owner = userType == 'boy' ? boy : girl
 import Bless from '../../components/Bless/Bless';
 import BgImg from '../../components/BgImg/BgImg';
 
-const bgImg = require('../../asset/images/photos/desktop-bg.jpg');
+const bgImg = require('../../asset/images/photos/desktop-bg.png');
 const iconImg = require('./images/icon.png');
 const count1Img = require('./images/count-1.png');
 const count2Img = require('./images/count-2.png');
 const count3Img = require('./images/count-3.png');
 const closeImg = require('./images/close.png');
+const winneImg = require('./images/winne.png');
 
 const audioMp3 = require('./audio/duang.mp3');
 const audioOgg = require('./audio/duang.ogg');
@@ -33,9 +34,26 @@ const weddingTime = (function(time){
     }
 })(owner.wedding.time)
 
+let clickTips = true
+
+const redPoints = {
+    dialing: true,
+    wechat: true,
+    photograph: true,
+    map: true
+}
+
 
 /*底部热点区组件*/
 class BottomHotSpot extends Component {
+    constructor(props) {
+        super(props);
+        let name =  this.props.name;
+
+        this.state = {
+            redpoint: redPoints[name]
+        }
+    }
     /*
      * count 新消息数量 可选为 1,2,3
      * animateType 动画类型 可选 1，2
@@ -53,24 +71,45 @@ class BottomHotSpot extends Component {
     }
 
     _redirectToUrl(url) {
+        redPoints[this.props.name] = false
+        this.setState({
+            redpoint: false
+        })
         browserHistory.push({
             pathname: url
         });
     }
 
     render() {
+        const redpoint = this.state.redpoint;
         const countImg = this._getCountImg(this.props.count);
         const redPointClassName = this.props.animateType ? `red-point  red-point-animate-${this.props.animateType}` : `red-point`;
         return (
             <div className="bottom-hot-spot" style={{left: this.props.left}}
                  onClick={()=>this._redirectToUrl(this.props.toUrl)}>
-                <img className={redPointClassName} src={countImg}/>
+                {
+                    redpoint ? <img className={redPointClassName} src={countImg}/> : ''
+                }
             </div>
         )
     };
 }
 /*头部热点区组件*/
 class TopHotSpot extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            tipsClassName: 'top-tips'
+        }
+
+        setTimeout(() => {
+            clickTips = false;
+            this.setState({
+                tipsClassName: 'top-tips top-tips-transition'
+            })
+        }, 0)
+    }
     /*
      * topText 头部文字
      * middleText 中间文字
@@ -80,6 +119,7 @@ class TopHotSpot extends Component {
         const topText = this.props.topText;
         const middleText = this.props.middleText;
         const bottomText = this.props.bottomText;
+        const needTips = this.props.needTips;
         return (
             <div className="top-hot-spot" style={{left: this.props.left}} onClick={()=>this.props.click()}>
                 {topText ?
@@ -97,6 +137,15 @@ class TopHotSpot extends Component {
                     :
                     ''
                 }
+                {
+                    needTips ? 
+                    <div className={this.state.tipsClassName}>
+                        <img src={winneImg} />
+                        <p>点击上面的图标有惊喜哦</p>
+                    </div>
+                    :
+                    ''
+                }
             </div>
         )
     };
@@ -106,7 +155,8 @@ export default class Desktop extends Component {
         super(props);
         this.state = {
             videoShow: false,
-            blessShow: false
+            blessShow: false,
+            clickTips: clickTips
         }
     }
 
@@ -155,15 +205,16 @@ export default class Desktop extends Component {
                     {/*上部热定区*/}
                     <TopHotSpot left="27px" topText={weddingTime.month + '月'}
                                 middleText={weddingTime.date} bottomText={'日期'}
+                                needTips={this.state.clickTips}
                                 click={()=>this._redirectToUrl('/integrated')}/>
                     <TopHotSpot left="180px" bottomText={'视频'} click={()=>this._openVideo()}/>
                     <TopHotSpot left="332px" bottomText={'相册'} click={()=>this._redirectToUrl('/photos')}/>
                     <TopHotSpot left="485px" bottomText={'祝福'} click={()=>this._openBless()}/>
                     {/*下部热点区*/}
-                    <BottomHotSpot count={2} left="27px" animateType={2} toUrl={'/dialing'}/>
-                    <BottomHotSpot count={1} left="180px" animateType={2} toUrl={'/wechat'}/>
-                    <BottomHotSpot count={3} left="332px" animateType={1} toUrl={'/photograph'}/>
-                    <BottomHotSpot count={1} left="485px" toUrl={'/map'}/>
+                    <BottomHotSpot name="dialing" count={2} left="27px" animateType={2} toUrl={'/dialing'}/>
+                    <BottomHotSpot name="wechat" count={1} left="180px" animateType={2} toUrl={'/wechat'}/>
+                    <BottomHotSpot name="photograph" count={3} left="332px" animateType={1} toUrl={'/photograph'}/>
+                    <BottomHotSpot name="map" count={1} left="485px" toUrl={'/map'}/>
                 </div>
                 <audio className="hidden" autoPlay id="desktop-audio">
                     <source src={audioOgg} type="audio/ogg"/>

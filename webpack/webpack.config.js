@@ -29,7 +29,7 @@ module.exports = {
     output: {
         path: DIST_PATH,
         /*静态资源路径*/
-        publicPath: "/",
+        publicPath: "//pem6058l4.bkt.clouddn.com/wedding/dist/v1/",
         filename: '[name].[chunkhash:5].chunk.js'
     },
     plugins: [

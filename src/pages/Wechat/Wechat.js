@@ -10,8 +10,8 @@ import Back from '../../components/Back/Back';
 
 const bgImg = require('./images/bg.jpg');
 const returnImg = require('../../asset/images/return.png');
-const boyImg = require('../../asset/images/photos/wechat-boy.jpg');
-const girlImg = require('../../asset/images/photos/wechat-girl.jpg');
+const boyImg = require('../../asset/images/photos/wechat-boy.png');
+const girlImg = require('../../asset/images/photos/wechat-girl.png');
 const groupImg = require('./images/wechat-group.png');
 
 const boyAudioMp3 = require('../../asset/audio/wechat-boy.mp3');

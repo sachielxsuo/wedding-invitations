@@ -10,18 +10,49 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 const leftImg = require('./images/left.png');
 const rightImg = require('./images/right.png');
 
-const photos = [
-    require('../../asset/images/photos/photos/photo1.jpg'),
-    require('../../asset/images/photos/photos/photo2.jpg'),
-    require('../../asset/images/photos/photos/photo3.jpg'),
-    require('../../asset/images/photos/photos/photo4.jpg'),
-    require('../../asset/images/photos/photos/photo5.jpg'),
-    require('../../asset/images/photos/photos/photo6.jpg'),
-    require('../../asset/images/photos/photos/photo7.jpg'),
-    require('../../asset/images/photos/photos/photo8.jpg'),
-    require('../../asset/images/photos/photos/photo9.jpg'),
-    require('../../asset/images/photos/photos/photo10.jpg'),
+const photos = [{
+        src: require('../../asset/images/photos/photos/01.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/02.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/03.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/04.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/05.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/06.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/07.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/08.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/09.jpg'),
+        horizontal: false
+    }, {
+        src: require('../../asset/images/photos/photos/10.jpg'),
+        horizontal: false
+    }
 ]
+
+const horizontalPhoto = {
+    width: window.innerWidth,
+    height: window.innerWidth / 1.5
+}
+
+const horizontalStyle = {
+    height: horizontalPhoto.height + 'px',
+    top: '50%',
+    marginTop: (0 - horizontalPhoto.height / 2) + 'px'
+}
 
 export default class Photos extends Component {
     constructor(props) {
@@ -37,17 +68,17 @@ export default class Photos extends Component {
     }
 
     componentDidMount() {
-        this.photosInterval = setInterval(()=> {
-            let waitTime = ++this.state.waitTime;
-            if (waitTime == 5) {
-                this.setState({
-                    currentIndex: ++this.state.currentIndex,
-                    waitTime: 0,
-                    /*每次自动滑动都是向左滑动*/
-                    animate: 'photos-left'
-                });
-            }
-        }, 1000);
+        // this.photosInterval = setInterval(()=> {
+        //     let waitTime = ++this.state.waitTime;
+        //     if (waitTime == 5) {
+        //         this.setState({
+        //             currentIndex: ++this.state.currentIndex,
+        //             waitTime: 0,
+        //             /*每次自动滑动都是向左滑动*/
+        //             animate: 'photos-left'
+        //         });
+        //     }
+        // }, 1000);
         var startX, endX;
         document.getElementsByClassName('photos-page')[0].addEventListener('touchstart', (e)=> {
             startX = e.touches[0].pageX;
@@ -81,6 +112,7 @@ export default class Photos extends Component {
     }
 
     render() {
+        const photo = photos[this.state.currentIndex % photos.length]
         return (
             <div className="full-page photos-page">
                 <ReactCSSTransitionGroup
@@ -88,7 +120,7 @@ export default class Photos extends Component {
                     transitionEnterTimeout={1}
                     transitionLeaveTimeout={200}
                 >
-                    <img className="photos" src={photos[this.state.currentIndex % photos.length]}
+                    <img className="photos" src={photo.src} style={photo.horizontal ? horizontalStyle : {}}
                          key={this.state.currentIndex}/>
                 </ReactCSSTransitionGroup>
                 <img src={leftImg} className="left-row row"/>

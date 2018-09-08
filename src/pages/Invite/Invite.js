@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import './Invite.scss';
 import  Back from 'components/Back/Back';
 import BgImg from '../../components/BgImg/BgImg';
-const bgImg = require('../../asset/images/photos/invite-bg.jpg');
+const bgImg = require('../../asset/images/photos/invite-bg.png');
 
 import { boy, girl } from '../config';
 

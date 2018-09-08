@@ -8,10 +8,11 @@ import Back from 'components/Back/Back';
 import Bless from 'components/Bless/Bless';
 import BgImg from '../../components/BgImg/BgImg';
 
-const bgImg = require('../../asset/images/photos/integrated-bg.jpg');
+const bgImg = require(`../../asset/images/photos/integrated-bg-${ userType }.png`);
 
-const circle1Img = require('./images/circle-1.png');
-const circle2Img = require('./images/circle-2.png');
+const circle1Img = require('./images/winne1.png');
+const circle2Img = require('./images/winne2.png');
+const circle3Img = require('./images/winne3.png');
 const whiteCircleImg = require('./images/white-circle.png');
 
 class IntegratedItem extends Component {
@@ -81,7 +82,7 @@ export default class Integrated extends Component {
                     />
                     <IntegratedItem
                         position="item-3"
-                        imgSrc={circle2Img}
+                        imgSrc={circle3Img}
                         title="好友动态"
                         intro="祝福留言"
                         click={()=>this._openBless()}

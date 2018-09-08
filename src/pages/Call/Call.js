@@ -11,7 +11,7 @@ import { boy, girl } from '../config';
 
 const owner = userType == 'boy' ? boy : girl
 
-const bgImg = require('../../asset/images/photos/call-bg.jpg');
+const bgImg = require('../../asset/images/photos/call-bg.png');
 const tipImg = require('./images/tip.png');
 const messageImg = require('./images/message.png');
 const refuseImg = require('./images/refuse.png');
@@ -54,6 +54,10 @@ export default class Call extends Component {
                     <img className="message img-line-1" src={messageImg} />
                     <img className="refuse img-line-2" src={refuseImg} />
                     <img className="answer img-line-2" src={answerImg} onClick={() => this._redirectToTalk()} />
+                    <div className="answer-tips">
+                        <p>接个电话吧</p>
+                        <i></i>
+                    </div>
                 </div>
                 <audio className="hidden" id="call-audio" autoPlay loop>
                     <source src={audioOgg} type="audio/ogg" />

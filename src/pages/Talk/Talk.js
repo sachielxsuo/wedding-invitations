@@ -11,10 +11,10 @@ import { boy, girl } from '../config';
 
 const owner = userType == 'boy' ? boy : girl
 
-const bgImg = require('../../asset/images/photos/talk-bg.jpg');
+const bgImg = require('../../asset/images/photos/talk-bg.png');
 const functionImg = require('./images/function.png');
 const hungUpImg = require('./images/hung-up.png');
-const boyMp3 = require('../../asset/audio/talk.mp3');
+const boyMp3 = require('../../asset/audio/talk-boy.mp3');
 const girlMp3 = require('../../asset/audio/talk-girl.mp3');
 export default class Talk extends Component {
     constructor(props) {
@@ -25,6 +25,8 @@ export default class Talk extends Component {
     }
 
     componentDidMount() {
+        let audio = document.getElementById('talk-audio')
+
         this.interval = setInterval(()=> {
             this.setState({
                 timestamp: Date.parse(new Date()) / 1000
@@ -33,8 +35,14 @@ export default class Talk extends Component {
         /*音频延迟0.1秒播放*/
         this.audioTimer = setTimeout(()=> {
             autoPlay('talk-audio');
-            document.getElementById('talk-audio').play();
+            audio.play();
         }, 100);
+
+        audio.addEventListener('ended', () =>　{
+            setTimeout(() => {
+                this._redirectToDesktop();
+            }, 6000)
+        })
     }
 
     componentWillUnmount() {
