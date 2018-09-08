@@ -11,34 +11,34 @@ const leftImg = require('./images/left.png');
 const rightImg = require('./images/right.png');
 
 const photos = [{
-        src: require('../../asset/images/photos/photos/01.jpg'),
+        src: require('asset/images/photos/photos/01.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/02.jpg'),
+        src: require('asset/images/photos/photos/02.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/03.jpg'),
+        src: require('asset/images/photos/photos/03.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/04.jpg'),
+        src: require('asset/images/photos/photos/04.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/05.jpg'),
+        src: require('asset/images/photos/photos/05.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/06.jpg'),
+        src: require('asset/images/photos/photos/06.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/07.jpg'),
+        src: require('asset/images/photos/photos/07.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/08.jpg'),
+        src: require('asset/images/photos/photos/08.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/09.jpg'),
+        src: require('asset/images/photos/photos/09.jpg'),
         horizontal: false
     }, {
-        src: require('../../asset/images/photos/photos/10.jpg'),
+        src: require('asset/images/photos/photos/10.jpg'),
         horizontal: false
     }
 ]

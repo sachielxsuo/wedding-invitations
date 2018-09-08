@@ -11,7 +11,7 @@ import { boy, girl } from '../config';
 
 const owner = userType == 'boy' ? boy : girl
 
-const bgImg = require('../../asset/images/photos/call-bg.png');
+const bgImg = require('asset/images/photos/call-bg.png');
 const tipImg = require('./images/tip.png');
 const messageImg = require('./images/message.png');
 const refuseImg = require('./images/refuse.png');
