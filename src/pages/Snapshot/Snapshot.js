@@ -9,7 +9,9 @@ import BgImg from '../../components/BgImg/BgImg';
 
 const firstImg = require('asset/images/photos/snapshot/01.jpg');
 const secondImg = require('asset/images/photos/snapshot/02.jpg');
-const bgImg = require('./images/camera.png');
+const thirdImg = require('asset/images/photos/snapshot/03.jpg');
+const fouthImg = require('asset/images/photos/snapshot/04.jpg');
+const bgImg = require('./images/snapshot-bg.png');
 export default class Snapshot extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +24,8 @@ export default class Snapshot extends Component {
                 <BgImg src={bgImg} animate={false}/>
                 <img src={firstImg} className="first-img photo"/>
                 <img src={secondImg} className="second-img photo"/>
+                <img src={thirdImg} className="third-img photo"/>
+                <img src={fouthImg} className="fouth-img photo"/>
                 <Back position={"back-left-top"}/>
             </div>
         );

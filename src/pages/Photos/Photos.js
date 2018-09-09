@@ -10,38 +10,17 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 const leftImg = require('./images/left.png');
 const rightImg = require('./images/right.png');
 
-const photos = [{
-        src: require('asset/images/photos/photos/01.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/02.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/03.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/04.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/05.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/06.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/07.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/08.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/09.jpg'),
-        horizontal: false
-    }, {
-        src: require('asset/images/photos/photos/10.jpg'),
-        horizontal: false
+const PHOTO_TOTAL = 19;
+const photos = (function(count) {
+    const arr = []
+    function fill(num){
+        return num < 10 ? '0' + num : num
     }
-]
+    for(let i = 1;i <= count; i++){
+        arr.push(require(`asset/images/photos/photos/${ fill(i) }.jpg`))
+    }
+    return arr;
+})(PHOTO_TOTAL)
 
 const horizontalPhoto = {
     width: window.innerWidth,
@@ -68,17 +47,17 @@ export default class Photos extends Component {
     }
 
     componentDidMount() {
-        // this.photosInterval = setInterval(()=> {
-        //     let waitTime = ++this.state.waitTime;
-        //     if (waitTime == 5) {
-        //         this.setState({
-        //             currentIndex: ++this.state.currentIndex,
-        //             waitTime: 0,
-        //             /*每次自动滑动都是向左滑动*/
-        //             animate: 'photos-left'
-        //         });
-        //     }
-        // }, 1000);
+        this.photosInterval = setInterval(()=> {
+            let waitTime = ++this.state.waitTime;
+            if (waitTime == 5) {
+                this.setState({
+                    currentIndex: ++this.state.currentIndex,
+                    waitTime: 0,
+                    /*每次自动滑动都是向左滑动*/
+                    animate: 'photos-left'
+                });
+            }
+        }, 1000);
         var startX, endX;
         document.getElementsByClassName('photos-page')[0].addEventListener('touchstart', (e)=> {
             startX = e.touches[0].pageX;
@@ -86,13 +65,8 @@ export default class Photos extends Component {
         document.getElementsByClassName('photos-page')[0].addEventListener('touchend', (e) => {
             endX = e.changedTouches[0].pageX;
             if (endX - startX > 50) {
-                //alert('右滑动');
-                var currentIndex = --this.state.currentIndex;
-                if (currentIndex == -1) {
-                    currentIndex = photos.length - 1;
-                }
                 this.setState({
-                    currentIndex: currentIndex,
+                    currentIndex: this.state.currentIndex - 1 + PHOTO_TOTAL,
                     waitTime: 0,
                     animate: 'photos-right'
                 });
@@ -107,12 +81,28 @@ export default class Photos extends Component {
         });
     }
 
+    _prevPage(){
+        this.setState({
+            currentIndex: this.state.currentIndex - 1 + PHOTO_TOTAL,
+            waitTime: 0,
+            animate: 'photos-right'
+        });
+    }
+
+    _nextPage(){
+        this.setState({
+            currentIndex: ++this.state.currentIndex,
+            waitTime: 0,
+            animate: 'photos-left'
+        });
+    }
+
     componentWillUnmount() {
         this.photosInterval && clearInterval(this.photosInterval);
     }
 
     render() {
-        const photo = photos[this.state.currentIndex % photos.length]
+        const photo = photos[this.state.currentIndex % PHOTO_TOTAL]
         return (
             <div className="full-page photos-page">
                 <ReactCSSTransitionGroup
@@ -120,11 +110,11 @@ export default class Photos extends Component {
                     transitionEnterTimeout={1}
                     transitionLeaveTimeout={200}
                 >
-                    <img className="photos" src={photo.src} style={photo.horizontal ? horizontalStyle : {}}
+                    <img className="photos" src={photo}
                          key={this.state.currentIndex}/>
                 </ReactCSSTransitionGroup>
-                <img src={leftImg} className="left-row row"/>
-                <img src={rightImg} className="right-row row"/>
+                <img src={leftImg} className="left-row row" onClick={this._prevPage.bind(this)}/>
+                <img src={rightImg} className="right-row row" onClick={this._nextPage.bind(this)}/>
                 <Back position={"back-left-top"}/>
             </div>
         )

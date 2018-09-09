@@ -13,6 +13,7 @@ const location = owner.wedding.location;
 
 const hertImg = require('./images/hert.png');
 const closeImg = require('./images/close.png');
+const daohangImg = require('./images/daohang.png');
 export default class Map extends Component {
     constructor(props) {
         super(props);
@@ -63,9 +64,33 @@ export default class Map extends Component {
             height: 40, //高度
             panel: "panel", //检索结果面板
             enableAutoPan: true, //自动平移
-            searchTypes: []
+            enableSendToPhone: false,
+            searchTypes: [
+                BMAPLIB_TAB_TO_HERE  //到这里去
+            ]
         });
         infoWindow.open(point);
+
+        // var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true},policy: BMAP_DRIVING_POLICY_LEAST_TIME});
+        // 	driving.search('店子街小学','宝鸡五洲大酒店');
+    }
+
+    _daohang(){
+        const me = this
+        const geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(pos){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                me._openDaoHang(pos)
+            }
+            else {
+                alert('定位失败，无法开启导航，请填写起点手动导航');
+            }        
+        },{enableHighAccuracy: true})
+    }
+
+    _openDaoHang(curPos){
+        let url = `http://api.map.baidu.com/direction?origin=${ curPos.point.lat },${ curPos.point.lng }&origin_region=${ encodeURIComponent(curPos.address.city) }&destination=${ location.pos.lat },${ location.pos.lon }&destination_region=${ encodeURIComponent(location.city) }&mode=driving&output=html&src=webapp.baidu.openAPIdemo`
+        window.location.href = url;
     }
 
     _goBack() {
@@ -76,6 +101,7 @@ export default class Map extends Component {
         return (
             <div className="full-page map-page">
                 <img src={closeImg} className="close" onClick={()=>this._goBack()}/>
+                <img src={daohangImg} className="daohang" onClick={()=>this._daohang()}/>
                 <div id="map" className="map"></div>
             </div>
         )

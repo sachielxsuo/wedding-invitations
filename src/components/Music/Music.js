@@ -4,7 +4,7 @@
 /**右上角音乐符号**/
 import React, {Component} from 'react';
 import './Music.scss';
-const bgm = require('../../asset/audio/bgm.mp3');
+const bgm = require('asset/audio/bgm-jaychou.mp3');
 const playMusicArr = [
     'photos', 'integrated', 'invite', 'snapshot', 'dialing',
     'map'

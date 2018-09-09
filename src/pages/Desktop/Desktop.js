@@ -34,8 +34,9 @@ const weddingTime = (function(time){
     }
 })(owner.wedding.time)
 
-let clickTips = true
+let maskBoxTips = true //是否要弹出mask提示
 
+// 是否展示红点
 const redPoints = {
     dialing: true,
     wechat: true,
@@ -96,20 +97,6 @@ class BottomHotSpot extends Component {
 }
 /*头部热点区组件*/
 class TopHotSpot extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            tipsClassName: 'top-tips'
-        }
-
-        setTimeout(() => {
-            clickTips = false;
-            this.setState({
-                tipsClassName: 'top-tips top-tips-transition'
-            })
-        }, 0)
-    }
     /*
      * topText 头部文字
      * middleText 中间文字
@@ -119,7 +106,6 @@ class TopHotSpot extends Component {
         const topText = this.props.topText;
         const middleText = this.props.middleText;
         const bottomText = this.props.bottomText;
-        const needTips = this.props.needTips;
         return (
             <div className="top-hot-spot" style={{left: this.props.left}} onClick={()=>this.props.click()}>
                 {topText ?
@@ -137,15 +123,6 @@ class TopHotSpot extends Component {
                     :
                     ''
                 }
-                {
-                    needTips ? 
-                    <div className={this.state.tipsClassName}>
-                        <img src={winneImg} />
-                        <p>点击上面的图标有惊喜哦</p>
-                    </div>
-                    :
-                    ''
-                }
             </div>
         )
     };
@@ -156,7 +133,8 @@ export default class Desktop extends Component {
         this.state = {
             videoShow: false,
             blessShow: false,
-            clickTips: clickTips
+            maskBoxTips: maskBoxTips,
+            maskBoxClassName: 'mask-box'
         }
     }
 
@@ -190,13 +168,40 @@ export default class Desktop extends Component {
         });
     }
 
+    _handleMask(){
+        maskBoxTips = false
+        this.setState({
+            maskBoxClassName: 'mask-box mask-box-enter mask-box-leave'
+        })
+        setTimeout(()=>{
+            this._redirectToUrl('/integrated')
+        }, 2000)
+    }
+
     componentDidMount() {
         autoPlay('desktop-audio');
+        setTimeout(()=>{
+            this.setState({
+                maskBoxClassName: 'mask-box mask-box-enter'
+            })
+        }, 500)
     }
 
     render() {
+        const {maskBoxTips, maskBoxClassName} = this.state;
         return (
             <div className="full-page desktop-page">
+                {
+                    maskBoxTips ?
+                        <div className="mask">
+                            <div className={maskBoxClassName} onClick={this._handleMask.bind(this)}>
+                                <img src={winneImg} />
+                                <p className="mask-text">点我点我！</p>
+                            </div>
+                        </div>
+                        :
+                        ''
+                }
                 {/*背景照片*/}
                 <BgImg src={bgImg} animate={true}/>
                 <div className="bg">
@@ -205,7 +210,6 @@ export default class Desktop extends Component {
                     {/*上部热定区*/}
                     <TopHotSpot left="27px" topText={weddingTime.month + '月'}
                                 middleText={weddingTime.date} bottomText={'日期'}
-                                needTips={this.state.clickTips}
                                 click={()=>this._redirectToUrl('/integrated')}/>
                     <TopHotSpot left="180px" bottomText={'视频'} click={()=>this._openVideo()}/>
                     <TopHotSpot left="332px" bottomText={'相册'} click={()=>this._redirectToUrl('/photos')}/>
@@ -225,7 +229,7 @@ export default class Desktop extends Component {
                 {this.state.videoShow ?
                     <div className='video' onClick={()=>this._closeVideo()}>
                         <img src={closeImg} className="close" onClick={()=>this._closeVideo()}/>
-                        <iframe src="https://v.qq.com/iframe/player.html?vid=d0362vjag67&tiny=0&auto=0"
+                        <iframe src="https://v.qq.com/iframe/player.html?vid=u078274yvog&tiny=0&auto=0"
                                 onClick={(e)=>e.preventDefault()}></iframe>
                     </div>
                     :
